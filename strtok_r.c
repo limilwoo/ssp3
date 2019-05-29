@@ -1,8 +1,8 @@
 int main( int argc, char *argv[]) 
 {
   FILE *pFile;
-  char line[100] = {0x00, };
-  char record[100][100] = {0x00, };
+ // char line[100] = {0x00, };
+ // char record[100][100] = {0x00, };
   char full_path[30];
   char fname[100];
   int i = 0;
