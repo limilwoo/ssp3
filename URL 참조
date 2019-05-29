@@ -7,3 +7,50 @@ http://ehpub.co.kr/
 
 
 http://ehpub.co.kr/c%EC%96%B8%EC%96%B4-%EC%86%8C%EC%8A%A4-%EC%9D%80%ED%96%89-%EA%B3%84%EC%A2%8C-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8/
+
+#include <stdio.h>
+#include <string.h>
+ 
+char str [100];
+ 
+int c;
+ 
+void main()
+{
+	// 파일 읽기 위한 준비
+	FILE *fp;
+ 
+	fp = fopen("c:\\testfile.txt","r");
+ 
+	if(fp==NULL)
+	{
+		printf("이 파일은 존재하지 않습니다\n");
+	}
+	else
+	{
+		c=getc(fp);
+		while(c!=EOF){
+                                                // 파일에서 단어를 읽어와 str 배열에 저장한다
+						fscanf (fp, "%s", str);
+						// 숫자일 경우
+						if()
+						{
+							printf(" 이건 숫자다...\n");
+							c=getc(fp);
+						}
+						// 문자열일 경우
+						else if()
+						{
+							printf(" 이건 문자열이다\n");
+							c=getc(fp);
+						}
+						// 아무것도 아닌 경우
+						else
+						{
+						printf("이것은 아무것도 해당이 되지 않는다\n");
+						c=getc(fp);
+						}
+		}
+		fclose(fp);
+	}
+}
