@@ -8,49 +8,130 @@ http://ehpub.co.kr/
 
 http://ehpub.co.kr/c%EC%96%B8%EC%96%B4-%EC%86%8C%EC%8A%A4-%EC%9D%80%ED%96%89-%EA%B3%84%EC%A2%8C-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8/
 
+
 #include <stdio.h>
-#include <string.h>
+#include <string.h>	//strlen memset
+#include <ctype.h>	//isalpha isdigit
  
 char str [100];
  
-int c;
+//모두 문자면 찾은 갯수.
+//문자가 아닌게 있으면. -1
+int fn_isString(char* str)
+{
+	int cnt = 0;
+	int len = strlen(str);
+	if(len == 0)
+	{
+		return -1;
+	}
+ 
+	for(int i=0; i<len; i++)
+	{
+		//문자
+		int n = isalpha( *(str+i) );	//0이 아니면 문자
+		if( n != 0 )
+		{
+			cnt++;
+		}
+	}
+ 
+	if(len == cnt)
+	{
+		return cnt;
+	}
+	return -1;
+}
+ 
+//모두 숫자면 찾은 갯수.
+//숫자가 아닌게 있으면. -1
+int fn_isNumber(char* str)
+{
+	int cnt = 0;
+	int len = strlen(str);
+	if(len == 0)
+	{
+		return -1;
+	}
+ 
+	for(int i=0; i<len; i++)
+	{
+		//숫자
+		int n = isdigit( *(str+i) );	//0이 아니면 숫자.
+		if( n != 0 )
+		{
+			cnt++;
+		}
+	}
+ 
+	if(len == cnt)
+	{
+		return cnt;
+	}
+	return -1;
+}
+ 
  
 void main()
 {
+ 
 	// 파일 읽기 위한 준비
-	FILE *fp;
- 
-	fp = fopen("c:\\testfile.txt","r");
- 
+	FILE *fp = NULL;
+	fp = fopen("testfile.txt","r");
 	if(fp==NULL)
 	{
 		printf("이 파일은 존재하지 않습니다\n");
 	}
 	else
 	{
-		c=getc(fp);
-		while(c!=EOF){
-                                                // 파일에서 단어를 읽어와 str 배열에 저장한다
-						fscanf (fp, "%s", str);
-						// 숫자일 경우
-						if()
-						{
-							printf(" 이건 숫자다...\n");
-							c=getc(fp);
-						}
-						// 문자열일 경우
-						else if()
-						{
-							printf(" 이건 문자열이다\n");
-							c=getc(fp);
-						}
-						// 아무것도 아닌 경우
-						else
-						{
-						printf("이것은 아무것도 해당이 되지 않는다\n");
-						c=getc(fp);
-						}
+		while(1)
+		{
+			memset(str, '\0', sizeof(str));
+			if(fgets(str, 100, fp) == NULL)
+				break;
+ 
+			//한줄씩 읽는다.
+			//fgets는 \n까지 얻는다. 맨 마지막 \n를 제거해준다.
+			int max_len = strlen(str);
+			if(max_len > 0)
+			{
+				str[max_len-1] = '\0';
+			}
+ 
+ 
+//			//스페이스가 구분자가 되어. 한줄에서 여러번 읽어질 수 있다.
+//			//fgets와는 다르게 문자열 단위로 읽는다.
+//			int max_len = fscanf (fp, "%s", str);
+//			if(max_len == -1)
+//				break;
+ 
+			// 숫자일 경우
+			int n1 = fn_isNumber(str);
+			if( n1 >= 0 )
+			{
+				printf(" 이건 숫자다... %s\n", str);
+				continue;
+			}
+ 
+			// 문자열일 경우
+			int n2 = fn_isString(str);
+			if( n2 >= 0 )
+			{
+				printf(" 이건 문자열이다 %s\n", str);
+				continue;
+			}
+ 
+			if(n1 == -1 && n2 == -1)
+			{
+				printf("이것은 아무것도 해당이 되지 않는다 %s\n", str);
+			}
 		}
 		fclose(fp);
 	}
 }
+
+
+
+
+
+
