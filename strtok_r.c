@@ -28,7 +28,7 @@ int main( int argc, char *argv[])
     {
     
       char * subptr = strtok_r( ptr, ",",  &saveptr2 );
-      while( ptr != NULL )
+      while( subptr != NULL )
       {
         // do something
         printf(" sub : %s\n", subptr);
