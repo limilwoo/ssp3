@@ -8,6 +8,8 @@ int main( int argc, char *argv[])
   int i = 0;
   char *saveptr1;
   char *saveptr2;
+  int size = 0;
+  char *buffer;
   
   scanf("%s", fname);
   
@@ -18,11 +20,21 @@ int main( int argc, char *argv[])
   if (pFile == NULL)
     perror("file open error");
   
+  fseek(pFile, 0 , SEEK_END);
+  size = ftell( pFile );
+  
+  buffer = malloc( size + 1 );
+  memset( buffer, 0 , size + 1 );
+  
+  printf( "File size : %d\n", size );
+  
+  fseek( pFile, 0, SEEK_SET); // 파일 포인터 처음으로 이동
+  
   while( !feof(pFile) )
   {
-    fgets ( line, 100, pFile );
+    fgets ( buffer, size, pFile );
     
-    char *ptr = strtok_r(line, "#", &saveptr1 );
+    char *ptr = strtok_r(buffer, "#", &saveptr1 );
     
     while( ptr != NULL )
     {
@@ -39,6 +51,8 @@ int main( int argc, char *argv[])
     }
   
     fclose(pFile);
+    
+    free(buffer);
   
   return 0;
   
